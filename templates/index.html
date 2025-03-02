@@ -1,0 +1,171 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Preparedness Survey</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group label {
+            display: block;
+            background: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .checkbox-group input {
+            display: none;
+        }
+
+        .checkbox-group label:hover {
+            background: #d6d6d6;
+        }
+
+        .checkbox-group input:checked + label {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #45a049;
+        }
+
+    </style>
+
+    <script>
+        let userLocation = {};
+
+    
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation.latitude = position.coords.latitude;
+                        userLocation.longitude = position.coords.longitude;
+                    },
+                    (error) => {
+                        console.error("Error getting location:", error);
+                        alert("Location access denied. Default risk levels will be used.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function calculatePreparedness() {
+            let selectedItems = [];
+            document.querySelectorAll("input[type=checkbox]:checked").forEach(item => {
+                selectedItems.push(item.id);
+            });
+            let selectedLanguage = document.getElementById("language").value;
+
+            fetch("/predict_preparedness", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    selected_items: selectedItems,
+                    location: userLocation,
+                    language: selectedLanguage
+                })
+            })
+            .then(response => response.text())  
+            .then(html => {
+                document.open();
+                document.write(html);  
+                document.close();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        // ✅ Get location when page loads
+        window.onload = getLocation;
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🌍 Disaster Preparedness Survey</h1>
+        <form id="preparedness-form">
+            <div class="checkbox-group">
+                <input type="checkbox" id="flashlight">
+                <label for="flashlight">🔦 Flashlight</label>
+
+                <input type="checkbox" id="first-aid-kit">
+                <label for="first-aid-kit">⛑️ First Aid Kit</label>
+
+                <input type="checkbox" id="water">
+                <label for="water">💧 Water Supply</label>
+
+                <input type="checkbox" id="radio">
+                <label for="radio">📻 Battery-Powered Radio</label>
+                <label for="language">🌍 Choose Language:</label>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="es">Español (Spanish)</option>
+                    <option value="fr">Français (French)</option>
+                    <option value="de">Deutsch (German)</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="zh">中文 (Chinese)</option>
+                    <option value="pl">Polski (Polish)</option>  <!-- ✅ Added Polish -->
+                    <option value="bn">বাংলা (Bengali)</option> 
+                </select>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="calculatePreparedness()">📋 Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>
