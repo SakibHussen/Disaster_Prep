@@ -7,14 +7,14 @@ import requests
 app = Flask(__name__)
 
 # Set your Google Gemini API key
-GEMINI_API_KEY = "AIzaSyCQXa7a4EtOu53QiZNu0mIszdtjsTGIfSk"
+GEMINI_API_KEY = "Put your geminai api key"
 genai.configure(api_key=GEMINI_API_KEY)
 
 genai.configure(api_key=GEMINI_API_KEY)
 
 
 
-YOUR_API_KEY="AIzaSyAkcVveoJt2Csz0PCubyVdIeNfe1s76058"
+YOUR_API_KEY="There you put your api key"
 
 
 
