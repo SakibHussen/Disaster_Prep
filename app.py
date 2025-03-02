@@ -83,10 +83,18 @@ def predict_preparedness():
 
    
     ITEM_WEIGHTS = {
-        "flashlight": {"flood": 4, "earthquake": 4, "wildfire": 4, "hurricane": 4},
+        "flashlight": {"flood": 3, "earthquake": 5, "wildfire": 4, "hurricane": 4},
         "first-aid-kit": {"flood": 5, "earthquake": 5, "tsunami": 5, "wildfire": 5, "hurricane": 5},
-        "water": {"flood": 5, "earthquake": 5, "tsunami": 5, "hurricane": 5},
-        "radio": {"flood": 5, "earthquake": 5, "tsunami": 5, "wildfire": 5, "hurricane": 5}
+        "water Supply": {"flood": 5, "earthquake": 4, "tsunami": 5, "hurricane": 5,"wildfire": 4},
+        "radio": {"flood": 4, "earthquake": 5, "tsunami": 5, "wildfire": 4, "hurricane": 5},
+        "Non-Perishable Food": {"flood": 5, "earthquake": 4, "tsunami": 5, "wildfire": 3, "hurricane": 5},
+        "Power Bank": {"flood": 3, "earthquake": 4, "tsunami": 3, "wildfire": 5, "hurricane": 4},
+        "medications": {"flood": 4, "earthquake": 3, "tsunami": 4, "wildfire": 3, "hurricane": 5},
+        "Emergency Cash": {"flood": 3, "earthquake": 5, "tsunami": 4, "wildfire": 4, "hurricane": 3},
+       
+        "map": {"flood": 3, "earthquake": 5, "tsunami": 5, "wildfire": 4, "hurricane": 3},
+        "generator": {"flood": 3, "earthquake": 4, "tsunami": 2, "wildfire": 5, "hurricane": 5},
+        "fire-extinguisher": {"flood": 1, "earthquake": 2, "tsunami": 1, "wildfire": 5, "hurricane": 2},
     }
 
     
